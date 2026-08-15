@@ -1,0 +1,31 @@
+seed: 42
+device: cuda            # falls back to cpu automatically if cuda unavailable
+backbone: dinov2_vits14_reg
+
+budgets: [1.0, 0.8, 0.6, 0.4, 0.2, 0.1, 0.05]
+mask_seeds: [0, 1, 2]   # at keep_ratio 1.0 only the first seed is run (mask is a no-op)
+protocol: per_budget    # per_budget | reuse_full_head
+
+depth:
+  resolution: [256, 256]     # (H, W), multiples of 14 -> 30x40 = 1200 patch grid
+  epochs: 10
+  lr: 1.0e-3
+  batch_size: 8
+  num_workers: 0             # keep 0: NYU is read from an open h5 handle
+  eval_mode: visible_only    # visible_only | full_image
+  depth_clip: [0.1, 10.0]
+
+classification:
+  dataset: timm/oxford-iiit-pet
+  fallback_dataset: pcuenq/oxford-pets
+  resolution: 224
+  epochs: 15
+  lr: 1.0e-3
+  batch_size: 256
+  num_workers: 4
+  cache_features: true       # CLS features are tiny; caching makes probing near-instant
+
+paths:
+  data: data
+  cache: data/cache
+  results: results
