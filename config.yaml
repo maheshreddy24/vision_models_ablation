@@ -7,7 +7,7 @@ mask_seeds: [0, 1, 2]   # at keep_ratio 1.0 only the first seed is run (mask is 
 protocol: per_budget    # per_budget | reuse_full_head
 
 depth:
-  resolution: [256, 256]     # (H, W), multiples of 14 -> 30x40 = 1200 patch grid
+  resolution: [252, 336]     # (H, W), multiples of 14 -> 30x40 = 1200 patch grid
   epochs: 10
   lr: 1.0e-3
   batch_size: 8
