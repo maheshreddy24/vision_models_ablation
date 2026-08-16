@@ -45,6 +45,11 @@ class LinearDepthHead(nn.Module):
         return pred, vis.view(B, 1, gh, gw)
 
 
+def build_head(embed_dim: int) -> LinearDepthHead:
+    """Fresh head architecture, e.g. for loading a state_dict in a worker process."""
+    return LinearDepthHead(embed_dim)
+
+
 def _upsample(pred_grid: torch.Tensor, vis_grid: torch.Tensor,
               size: Tuple[int, int]) -> Tuple[torch.Tensor, torch.Tensor]:
     pred = F.interpolate(pred_grid, size=size, mode="bilinear", align_corners=False)

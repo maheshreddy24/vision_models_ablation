@@ -14,7 +14,7 @@ def _agg(df: pd.DataFrame, task: str, metric: str) -> pd.DataFrame:
             .sort_values("keep_ratio"))
 
 
-def make_plots(csv_path: str, results_dir: str, protocol: str) -> None:
+def make_plots(csv_path: str, results_dir: str, protocol: str, backbone: str = "") -> None:
     df = pd.read_csv(csv_path)
     df = df[df.protocol == protocol]
     if df.empty:
@@ -44,7 +44,8 @@ def make_plots(csv_path: str, results_dir: str, protocol: str) -> None:
     ax1.set_xlabel("% patches kept")
     ax1.set_ylabel(r"Depth $\delta<1.25$", color="tab:blue")
     ax2.set_ylabel("Pets top-1 accuracy", color="tab:red")
-    ax1.set_title(f"DINOv2-S/14-reg patch-budget ablation ({protocol})")
+    title_backbone = backbone or "DINOv2-S/14"
+    ax1.set_title(f"{title_backbone} patch-budget ablation ({protocol})")
     lines = ax1.get_lines()[:1] + ax2.get_lines()[:1]
     ax1.legend(lines, [ln.get_label() for ln in lines], loc="lower right")
     fig.tight_layout()

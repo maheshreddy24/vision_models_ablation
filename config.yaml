@@ -1,6 +1,6 @@
 seed: 42
 device: cuda            # falls back to cpu automatically if cuda unavailable
-backbone: dinov2_vits14_reg
+backbone: dinov2_vits14   # original DINOv2 (no register tokens)
 
 budgets: [1.0, 0.8, 0.6, 0.4, 0.2, 0.1, 0.05]
 mask_seeds: [0, 1, 2]   # at keep_ratio 1.0 only the first seed is run (mask is a no-op)

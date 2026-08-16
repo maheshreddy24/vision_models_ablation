@@ -5,14 +5,16 @@
 import pytest
 import torch
 
+from src import utils
 from src.models.masked_dinov2 import MaskedDinoV2, load_backbone
 from src.tasks.depth import LinearDepthHead
 
 
 @pytest.fixture(scope="module")
 def encoder():
+    backbone_name = utils.load_config("config.yaml")["backbone"]
     try:
-        return MaskedDinoV2(load_backbone("dinov2_vits14_reg"))
+        return MaskedDinoV2(load_backbone(backbone_name))
     except Exception as e:
         pytest.skip(f"could not load backbone (network?): {e}")
 

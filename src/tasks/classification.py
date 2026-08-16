@@ -20,6 +20,11 @@ from .base import train_head
 TASK_NAME = "classification"
 
 
+def build_head(embed_dim: int) -> nn.Linear:
+    """Fresh head architecture, e.g. for loading a state_dict in a worker process."""
+    return nn.Linear(embed_dim, NUM_CLASSES)
+
+
 def _extract_cls(encoder: MaskedDinoV2, cfg: dict, split: str, keep_ratio: float,
                  mask_seed: int, device: torch.device) -> Tuple[torch.Tensor, torch.Tensor]:
     c = cfg["classification"]
